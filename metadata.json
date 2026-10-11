@@ -1,0 +1,6 @@
+{
+  "name": "Pookie Land 💗",
+  "description": "A playful, loving entertainment universe custom-made for Sweetheart by Salak to cure boredom with interactive mini-games, gacha rewards, court trials, and secret messages.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
