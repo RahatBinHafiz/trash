@@ -6,11 +6,28 @@ export type BoyfriendAction = 'idle' | 'pillow' | 'eating' | 'dancing' | 'huggin
 interface BoyfriendCharacterProps {
   action: BoyfriendAction;
   girlfriendName: string;
+  onCharacterClick?: () => void;
 }
 
-export const BoyfriendCharacter: React.FC<BoyfriendCharacterProps> = ({ action, girlfriendName }) => {
+export const BoyfriendCharacter: React.FC<BoyfriendCharacterProps> = ({ action, girlfriendName, onCharacterClick }) => {
   return (
-    <div className="relative w-64 h-64 mx-auto flex items-center justify-center select-none">
+    <div
+      onClick={onCharacterClick}
+      className={`relative w-64 h-64 mx-auto flex items-center justify-center select-none ${onCharacterClick ? 'cursor-pointer' : ''}`}
+      title={onCharacterClick ? 'Tap Salak to interact!' : undefined}
+    >
+      {/* Dizzy stars on pillow hit */}
+      {action === 'pillow' && (
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ repeat: Infinity, duration: 1.2, ease: 'linear' }}
+          className="absolute -top-4 w-40 h-40 pointer-events-none z-30"
+        >
+          <span className="absolute top-0 left-4 text-xl">💫</span>
+          <span className="absolute top-2 right-4 text-lg">⭐</span>
+          <span className="absolute bottom-2 left-6 text-base">✨</span>
+        </motion.div>
+      )}
       {/* Dynamic Floating Action Props */}
       <AnimatePresence>
         {action === 'pillow' && (
@@ -88,7 +105,7 @@ export const BoyfriendCharacter: React.FC<BoyfriendCharacterProps> = ({ action, 
           <motion.div
             initial={{ scale: 0, y: 20 }}
             animate={{ scale: 1, y: 0 }}
-            className="absolute -bottom-2 z-30 bg-rose-500 text-white font-bold text-xs px-3 py-1 rounded-full shadow-lg border-2 border-white flex items-center gap-1"
+            className="absolute -bottom-2 z-30 bg-rose-500 text-white font-bold text-xs px-3.5 py-1.5 rounded-full shadow-lg border-2 border-white flex items-center gap-1.5 whitespace-nowrap"
           >
             <span>❤️</span>
             <span>SALAK LOVES YOU, {girlfriendName.toUpperCase()}!</span>
@@ -120,176 +137,251 @@ export const BoyfriendCharacter: React.FC<BoyfriendCharacterProps> = ({ action, 
             ? { repeat: Infinity, duration: 3, ease: 'easeInOut' }
             : { duration: 0.5 }
         }
-        className="w-52 h-52 relative flex items-center justify-center"
+        className="w-56 h-56 relative flex items-center justify-center"
       >
-        <svg viewBox="0 0 200 200" className="w-full h-full drop-shadow-lg" fill="none">
+        <svg viewBox="0 0 200 200" className="w-full h-full drop-shadow-xl" fill="none">
           <defs>
-            <linearGradient id="hoodieGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#93c5fd" />
-              <stop offset="100%" stopColor="#60a5fa" />
+            {/* Light blue shirt gradient matching the photo */}
+            <linearGradient id="shirtGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#dbeafe" />
+              <stop offset="40%" stopColor="#bfdbfe" />
+              <stop offset="100%" stopColor="#93c5fd" />
             </linearGradient>
-            <linearGradient id="skinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <linearGradient id="collarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#eff6ff" />
+              <stop offset="100%" stopColor="#bfdbfe" />
+            </linearGradient>
+            {/* Skin tone matching the warm handsome complexion */}
+            <linearGradient id="salakSkin" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#ffedd5" />
-              <stop offset="100%" stopColor="#fed7aa" />
+              <stop offset="60%" stopColor="#fed7aa" />
+              <stop offset="100%" stopColor="#fdba74" />
             </linearGradient>
-            <linearGradient id="hairGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#451a03" />
-              <stop offset="100%" stopColor="#291102" />
+            {/* Stylized dark swept hair matching the photo */}
+            <linearGradient id="salakHair" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#27272a" />
+              <stop offset="50%" stopColor="#18181b" />
+              <stop offset="100%" stopColor="#09090b" />
+            </linearGradient>
+            <linearGradient id="salakHairHighlight" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#52525b" />
+              <stop offset="100%" stopColor="#27272a" />
             </linearGradient>
           </defs>
 
-          {/* Torso / Hoodie */}
+          {/* Torso: Light Blue Button-Down Shirt (as in the photo) */}
           <path
-            d="M 50 160 C 50 135 70 120 100 120 C 130 120 150 135 150 160 C 150 185 140 195 100 195 C 60 195 50 185 50 160 Z"
-            fill="url(#hoodieGrad)"
-            stroke="#2563eb"
-            strokeWidth="3"
+            d="M 52 145 C 52 125 72 118 100 118 C 128 118 148 125 148 145 L 152 195 L 48 195 Z"
+            fill="url(#shirtGrad)"
+            stroke="#60a5fa"
+            strokeWidth="2.5"
           />
 
-          {/* Hoodie strings & pouch */}
-          <path d="M 94 135 L 94 155 M 106 135 L 106 155" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" />
-          <ellipse cx="94" cy="157" rx="2" ry="2" fill="#ffffff" />
-          <ellipse cx="106" cy="157" rx="2" ry="2" fill="#ffffff" />
-          <path d="M 75 165 Q 100 175 125 165" stroke="#1d4ed8" strokeWidth="2" fill="none" />
+          {/* Shirt Placket (Center Button Strip) */}
+          <path d="M 95 132 L 95 195 L 105 195 L 105 132 Z" fill="#bfdbfe" opacity="0.6" />
+          <line x1="100" y1="130" x2="100" y2="195" stroke="#93c5fd" strokeWidth="1.5" />
+          {/* Shirt Buttons */}
+          <circle cx="100" cy="144" r="2" fill="#ffffff" stroke="#93c5fd" strokeWidth="1" />
+          <circle cx="100" cy="160" r="2" fill="#ffffff" stroke="#93c5fd" strokeWidth="1" />
+          <circle cx="100" cy="176" r="2" fill="#ffffff" stroke="#93c5fd" strokeWidth="1" />
 
           {/* Arms (Adjust based on action) */}
           {action === 'dancing' ? (
             <>
-              {/* Dancing wave arms */}
-              <path d="M 52 140 Q 30 115 45 90" stroke="#60a5fa" strokeWidth="12" strokeLinecap="round" />
-              <path d="M 148 140 Q 170 160 180 130" stroke="#60a5fa" strokeWidth="12" strokeLinecap="round" />
+              {/* Dancing wave arms in light blue shirt sleeves */}
+              <path d="M 52 140 Q 28 115 45 88" stroke="#93c5fd" strokeWidth="12" strokeLinecap="round" />
+              <path d="M 148 140 Q 172 160 182 128" stroke="#93c5fd" strokeWidth="12" strokeLinecap="round" />
             </>
           ) : action === 'hugging' ? (
             <>
               {/* Arms wide hugging */}
-              <path d="M 55 145 C 30 140 25 170 55 175" stroke="#60a5fa" strokeWidth="12" strokeLinecap="round" fill="none" />
-              <path d="M 145 145 C 170 140 175 170 145 175" stroke="#60a5fa" strokeWidth="12" strokeLinecap="round" fill="none" />
+              <path d="M 55 142 C 28 135 22 170 55 175" stroke="#93c5fd" strokeWidth="12" strokeLinecap="round" fill="none" />
+              <path d="M 145 142 C 172 135 178 170 145 175" stroke="#93c5fd" strokeWidth="12" strokeLinecap="round" fill="none" />
             </>
           ) : (
             <>
-              {/* Normal resting / idle hands */}
-              <path d="M 54 145 Q 40 165 60 175" stroke="#60a5fa" strokeWidth="11" strokeLinecap="round" fill="none" />
-              <path d="M 146 145 Q 160 165 140 175" stroke="#60a5fa" strokeWidth="11" strokeLinecap="round" fill="none" />
+              {/* Natural relaxed arms */}
+              <path d="M 54 142 Q 38 165 58 178" stroke="#93c5fd" strokeWidth="11" strokeLinecap="round" fill="none" />
+              <path d="M 146 142 Q 162 165 142 178" stroke="#93c5fd" strokeWidth="11" strokeLinecap="round" fill="none" />
             </>
           )}
 
-          {/* Neck */}
-          <rect x="91" y="110" width="18" height="15" fill="url(#skinGrad)" rx="4" />
+          {/* Neck & Open Collar V */}
+          <rect x="91" y="104" width="18" height="18" fill="url(#salakSkin)" rx="4" />
+          {/* Subtle clavicle shadow */}
+          <path d="M 94 116 Q 100 120 106 116" stroke="#fb923c" strokeWidth="1.5" strokeLinecap="round" fill="none" opacity="0.6" />
+
+          {/* Crisp Pointed Shirt Collar (Open Collar matching photo) */}
+          {/* Left Collar Flap */}
+          <path d="M 88 115 L 75 132 L 95 128 Z" fill="url(#collarGrad)" stroke="#60a5fa" strokeWidth="1.8" />
+          {/* Right Collar Flap */}
+          <path d="M 112 115 L 125 132 L 105 128 Z" fill="url(#collarGrad)" stroke="#60a5fa" strokeWidth="1.8" />
 
           {/* Ears */}
-          <ellipse cx="58" cy="85" rx="7" ry="10" fill="url(#skinGrad)" stroke="#ea580c" strokeWidth="1.5" />
-          <ellipse cx="142" cy="85" rx="7" ry="10" fill="url(#skinGrad)" stroke="#ea580c" strokeWidth="1.5" />
+          <ellipse cx="58" cy="84" rx="7.5" ry="10.5" fill="url(#salakSkin)" stroke="#f97316" strokeWidth="1.5" />
+          <path d="M 58 80 Q 61 84 58 88" stroke="#ea580c" strokeWidth="1.2" fill="none" opacity="0.6" />
+          <ellipse cx="142" cy="84" rx="7.5" ry="10.5" fill="url(#salakSkin)" stroke="#f97316" strokeWidth="1.5" />
+          <path d="M 142 80 Q 139 84 142 88" stroke="#ea580c" strokeWidth="1.2" fill="none" opacity="0.6" />
 
           {/* Head Base */}
-          <circle cx="100" cy="85" r="42" fill="url(#skinGrad)" stroke="#ea580c" strokeWidth="2.5" />
+          <circle cx="100" cy="82" r="41" fill="url(#salakSkin)" stroke="#ea580c" strokeWidth="2.2" />
 
-          {/* Tousled Messy Hair */}
+          {/* Forehead Band-Aid on pillow hit */}
+          {action === 'pillow' && (
+            <g transform="rotate(-15 85 62)">
+              <rect x="76" y="59" width="18" height="6" rx="2" fill="#fef08a" stroke="#ca8a04" strokeWidth="1" />
+              <circle cx="85" cy="62" r="1.5" fill="#ca8a04" />
+            </g>
+          )}
+
+          {/* Jaw Contour & Stubble Beard Shadow (signature feature from photo!) */}
           <path
-            d="M 58 75 C 55 45 80 40 100 40 C 120 40 145 45 142 75 C 135 60 120 52 100 52 C 80 52 65 60 58 75 Z"
-            fill="url(#hairGrad)"
+            d="M 64 82 C 65 106 80 121 100 121 C 120 121 135 106 136 82"
+            stroke="#78350f"
+            strokeWidth="3.5"
+            strokeDasharray="2 2"
+            opacity="0.32"
+            fill="none"
           />
-          {/* Hair locks / spikes */}
-          <path d="M 72 50 Q 82 35 94 48" fill="url(#hairGrad)" />
-          <path d="M 90 44 Q 106 32 118 46" fill="url(#hairGrad)" />
-          <path d="M 115 48 Q 132 38 136 55" fill="url(#hairGrad)" />
-          <path d="M 60 68 Q 66 58 75 62" fill="url(#hairGrad)" />
+          {/* Light Chin Stubble Shadow */}
+          <ellipse cx="100" cy="113" rx="14" ry="6" fill="#78350f" opacity="0.12" />
+          {/* Subtle Mustache Shadow */}
+          <path d="M 90 95 Q 100 93 110 95" stroke="#78350f" strokeWidth="2" strokeDasharray="1.5 1.5" opacity="0.3" fill="none" />
 
-          {/* Eyebrows */}
+          {/* Stylized Voluminous Swept-Back Hair (exactly matching the photo) */}
+          {/* Hair Base */}
+          <path
+            d="M 58 72 C 54 36 82 28 106 28 C 132 28 146 40 144 72 C 138 56 122 48 102 48 C 80 48 64 56 58 72 Z"
+            fill="url(#salakHair)"
+          />
+          {/* Hair Top Swept Volume & Locks (curving to the right as in photo) */}
+          <path
+            d="M 62 66 C 58 38 78 26 104 25 C 132 24 148 38 146 62 C 142 42 126 34 105 34 C 82 34 68 45 62 66 Z"
+            fill="url(#salakHairHighlight)"
+          />
+          {/* Front swept locks swooping to the right */}
+          <path d="M 72 38 Q 90 20 114 26" stroke="#27272a" strokeWidth="7" strokeLinecap="round" fill="none" />
+          <path d="M 94 28 Q 120 18 138 35" stroke="#27272a" strokeWidth="8" strokeLinecap="round" fill="none" />
+          <path d="M 112 32 Q 138 28 144 50" stroke="#18181b" strokeWidth="7" strokeLinecap="round" fill="none" />
+          {/* Sideburns */}
+          <path d="M 60 70 L 64 85 L 68 76 Z" fill="#18181b" />
+          <path d="M 140 70 L 136 85 L 132 76 Z" fill="#18181b" />
+
+          {/* Eyebrows: Groomed and expressive dark eyebrows */}
           {action === 'pillow' || action === 'booped' ? (
             <>
               {/* Worried / shocked brows */}
-              <path d="M 74 68 Q 84 74 92 70" stroke="#291102" strokeWidth="2.5" strokeLinecap="round" />
-              <path d="M 108 70 Q 116 74 126 68" stroke="#291102" strokeWidth="2.5" strokeLinecap="round" />
+              <path d="M 73 66 Q 84 72 92 68" stroke="#18181b" strokeWidth="3" strokeLinecap="round" />
+              <path d="M 108 68 Q 116 72 127 66" stroke="#18181b" strokeWidth="3" strokeLinecap="round" />
             </>
           ) : action === 'hugging' || action === 'loving' ? (
             <>
               {/* Soft affectionate brows */}
-              <path d="M 75 68 Q 84 64 92 68" stroke="#291102" strokeWidth="2.5" strokeLinecap="round" />
-              <path d="M 108 68 Q 116 64 125 68" stroke="#291102" strokeWidth="2.5" strokeLinecap="round" />
+              <path d="M 74 66 Q 84 62 92 66" stroke="#18181b" strokeWidth="3" strokeLinecap="round" />
+              <path d="M 108 66 Q 116 62 126 66" stroke="#18181b" strokeWidth="3" strokeLinecap="round" />
             </>
           ) : (
             <>
-              {/* Friendly brows */}
-              <path d="M 75 69 Q 84 66 92 70" stroke="#291102" strokeWidth="2.5" strokeLinecap="round" />
-              <path d="M 108 70 Q 116 66 125 69" stroke="#291102" strokeWidth="2.5" strokeLinecap="round" />
+              {/* Handsome gentle arched brows */}
+              <path d="M 74 67 Q 84 63 93 68" stroke="#18181b" strokeWidth="3.2" strokeLinecap="round" />
+              <path d="M 107 68 Q 116 63 126 67" stroke="#18181b" strokeWidth="3.2" strokeLinecap="round" />
             </>
           )}
 
-          {/* Eyes */}
+          {/* Eyes: Warm Dark-Brown Eyes with gentle eyelid crease */}
           {action === 'pillow' ? (
             // Dizzy spiral eyes
             <>
-              <text x="75" y="86" fontSize="16" fill="#78350f" fontWeight="bold">@</text>
-              <text x="111" y="86" fontSize="16" fill="#78350f" fontWeight="bold">@</text>
+              <text x="75" y="85" fontSize="17" fill="#78350f" fontWeight="bold">@</text>
+              <text x="111" y="85" fontSize="17" fill="#78350f" fontWeight="bold">@</text>
             </>
           ) : action === 'booped' ? (
             // Squeezed shut eyes > <
             <>
-              <path d="M 76 77 L 88 83 L 76 89" stroke="#78350f" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-              <path d="M 124 77 L 112 83 L 124 89" stroke="#78350f" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+              <path d="M 75 76 L 87 82 L 75 88" stroke="#451a03" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+              <path d="M 125 76 L 113 82 L 125 88" stroke="#451a03" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
             </>
           ) : action === 'hugging' || action === 'loving' ? (
-            // Heart eyes or happy arcs
+            // Heart eyes
             <>
-              <text x="74" y="87" fontSize="16" fill="#e11d48">❤️</text>
-              <text x="110" y="87" fontSize="16" fill="#e11d48">❤️</text>
+              <text x="73" y="86" fontSize="17" fill="#e11d48">❤️</text>
+              <text x="109" y="86" fontSize="17" fill="#e11d48">❤️</text>
             </>
           ) : action === 'eating' ? (
             // Nomming happy squint eyes
             <>
-              <path d="M 76 83 Q 83 76 90 83" stroke="#78350f" strokeWidth="3" strokeLinecap="round" fill="none" />
-              <path d="M 110 83 Q 117 76 124 83" stroke="#78350f" strokeWidth="3" strokeLinecap="round" fill="none" />
+              <path d="M 75 82 Q 83 74 91 82" stroke="#451a03" strokeWidth="3" strokeLinecap="round" fill="none" />
+              <path d="M 109 82 Q 117 74 125 82" stroke="#451a03" strokeWidth="3" strokeLinecap="round" fill="none" />
             </>
           ) : (
-            // Standard warm anime pupils
+            // Big warm brown eyes matching the photo
             <>
-              <circle cx="83" cy="82" r="5" fill="#451a03" />
-              <circle cx="85" cy="80.5" r="1.8" fill="#ffffff" />
-              <circle cx="117" cy="82" r="5" fill="#451a03" />
-              <circle cx="119" cy="80.5" r="1.8" fill="#ffffff" />
+              {/* Upper lash / eyelid line */}
+              <path d="M 75 76 Q 84 72 92 77" stroke="#18181b" strokeWidth="2.2" strokeLinecap="round" fill="none" />
+              <path d="M 108 77 Q 116 72 125 76" stroke="#18181b" strokeWidth="2.2" strokeLinecap="round" fill="none" />
+              {/* Brown iris */}
+              <ellipse cx="83.5" cy="81" rx="6" ry="6.5" fill="#3f2213" />
+              <circle cx="83.5" cy="81" r="3.5" fill="#18181b" />
+              <circle cx="85.5" cy="79" r="1.8" fill="#ffffff" />
+              <circle cx="82" cy="83.5" r="1" fill="#fed7aa" opacity="0.6" />
+
+              <ellipse cx="116.5" cy="81" rx="6" ry="6.5" fill="#3f2213" />
+              <circle cx="116.5" cy="81" r="3.5" fill="#18181b" />
+              <circle cx="118.5" cy="79" r="1.8" fill="#ffffff" />
+              <circle cx="115" cy="83.5" r="1" fill="#fed7aa" opacity="0.6" />
             </>
           )}
 
           {/* Cheeks (Blushing) */}
           <ellipse
-            cx="72"
-            cy="92"
-            rx={action === 'hugging' || action === 'loving' ? '9' : '6'}
-            ry={action === 'hugging' || action === 'loving' ? '6' : '4'}
+            cx="71"
+            cy="90"
+            rx={action === 'hugging' || action === 'loving' ? '9' : '6.5'}
+            ry={action === 'hugging' || action === 'loving' ? '6' : '4.5'}
             fill="#f43f5e"
-            opacity={action === 'hugging' || action === 'loving' ? '0.7' : '0.4'}
+            opacity={action === 'hugging' || action === 'loving' ? '0.7' : '0.45'}
           />
           <ellipse
-            cx="128"
-            cy="92"
-            rx={action === 'hugging' || action === 'loving' ? '9' : '6'}
-            ry={action === 'hugging' || action === 'loving' ? '6' : '4'}
+            cx="129"
+            cy="90"
+            rx={action === 'hugging' || action === 'loving' ? '9' : '6.5'}
+            ry={action === 'hugging' || action === 'loving' ? '6' : '4.5'}
             fill="#f43f5e"
-            opacity={action === 'hugging' || action === 'loving' ? '0.7' : '0.4'}
+            opacity={action === 'hugging' || action === 'loving' ? '0.7' : '0.45'}
           />
 
-          {/* Nose */}
+          {/* Clean Nose with soft shadow */}
           {action === 'booped' ? (
-            // Flattened glowing red nose
-            <ellipse cx="100" cy="89" rx="8" ry="5" fill="#f43f5e" stroke="#be123c" strokeWidth="2" />
+            // Flattened glowing red booped nose
+            <ellipse cx="100" cy="88" rx="8" ry="5.5" fill="#f43f5e" stroke="#be123c" strokeWidth="2" />
           ) : (
-            // Cute small nose
-            <circle cx="100" cy="88" r="2.5" fill="#f97316" />
+            // Gentle anime nose matching photo
+            <>
+              <path d="M 99 82 L 98 88 L 102 88" stroke="#ea580c" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+              <ellipse cx="101" cy="88" rx="1.5" ry="1" fill="#f97316" />
+            </>
           )}
 
-          {/* Mouth */}
+          {/* Mouth: The charming smirk / smile from the photo */}
           {action === 'eating' ? (
-            // Chewing "O" / puff mouth
-            <ellipse cx="100" cy="100" rx="9" ry="8" fill="#991b1b" stroke="#78350f" strokeWidth="2" />
+            // Chewing "O" / puff mouth with crumbs
+            <>
+              <ellipse cx="100" cy="100" rx="9" ry="8" fill="#991b1b" stroke="#78350f" strokeWidth="2" />
+              <circle cx="112" cy="102" r="1.5" fill="#f59e0b" />
+            </>
           ) : action === 'pillow' ? (
-            // Open "wah" mouth
+            // Open dramatic mouth
             <path d="M 92 98 Q 100 110 108 98 Z" fill="#991b1b" stroke="#78350f" strokeWidth="2" />
           ) : action === 'booped' ? (
-            // Squiggly mouth
-            <path d="M 92 101 Q 96 98 100 101 Q 104 104 108 101" stroke="#78350f" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+            // Squeaking mouth
+            <path d="M 92 101 Q 96 97 100 101 Q 104 105 108 101" stroke="#78350f" strokeWidth="2.5" strokeLinecap="round" fill="none" />
           ) : (
-            // Big goofy grin
-            <path d="M 91 97 Q 100 106 109 97" stroke="#78350f" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+            // Sweet gentle smile with slight cheek lift
+            <>
+              <path d="M 91 97 Q 100 105 109 97" stroke="#78350f" strokeWidth="2.6" strokeLinecap="round" fill="none" />
+              {/* Smile corner dimple */}
+              <path d="M 109 96 Q 112 95 111 98" stroke="#78350f" strokeWidth="1.8" strokeLinecap="round" fill="none" />
+            </>
           )}
         </svg>
       </motion.div>

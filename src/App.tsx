@@ -8,6 +8,9 @@ import { FeatureCourt } from './components/FeatureCourt';
 import { FeatureDiagnostic } from './components/FeatureDiagnostic';
 import { FeatureBoyfriendSuffer } from './components/FeatureBoyfriendSuffer';
 import { FeaturePunch } from './components/FeaturePunch';
+import { FeaturePunishmentWheel } from './components/FeaturePunishmentWheel';
+import { FeatureSnackCatcher } from './components/FeatureSnackCatcher';
+import { FeatureLieDetector } from './components/FeatureLieDetector';
 import { FeatureFortune } from './components/FeatureFortune';
 import { FeatureLoveLetter } from './components/FeatureLoveLetter';
 import { EmergencyHappinessButton } from './components/EmergencyHappinessButton';
@@ -27,6 +30,9 @@ const MainContent: React.FC = () => {
         {activeScreen === 'dashboard' && <DashboardView />}
         {activeScreen === 'gacha' && <FeatureGacha />}
         {activeScreen === 'punch' && <FeaturePunch />}
+        {activeScreen === 'wheel' && <FeaturePunishmentWheel />}
+        {activeScreen === 'snackcatcher' && <FeatureSnackCatcher />}
+        {activeScreen === 'liedetector' && <FeatureLieDetector />}
         {activeScreen === 'court' && <FeatureCourt />}
         {activeScreen === 'diagnostic' && <FeatureDiagnostic />}
         {activeScreen === 'suffer' && <FeatureBoyfriendSuffer />}

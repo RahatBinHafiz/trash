@@ -56,12 +56,36 @@ export const Header: React.FC = () => {
               Gacha Machine
             </button>
             <button
+              onClick={() => setActiveScreen('snackcatcher')}
+              className={`hover:text-pink-950 transition-colors whitespace-nowrap cursor-pointer ${
+                activeScreen === 'snackcatcher' ? 'font-bold text-pink-950 underline decoration-pink-400 decoration-2 underline-offset-4' : ''
+              }`}
+            >
+              Snack Catcher 🧋
+            </button>
+            <button
               onClick={() => setActiveScreen('punch')}
               className={`hover:text-pink-950 transition-colors whitespace-nowrap cursor-pointer ${
                 activeScreen === 'punch' ? 'font-bold text-pink-950 underline decoration-pink-400 decoration-2 underline-offset-4' : ''
               }`}
             >
               Punch Arcade
+            </button>
+            <button
+              onClick={() => setActiveScreen('wheel')}
+              className={`hover:text-pink-950 transition-colors whitespace-nowrap cursor-pointer ${
+                activeScreen === 'wheel' ? 'font-bold text-pink-950 underline decoration-pink-400 decoration-2 underline-offset-4' : ''
+              }`}
+            >
+              Penalty Wheel 🎡
+            </button>
+            <button
+              onClick={() => setActiveScreen('liedetector')}
+              className={`hover:text-pink-950 transition-colors whitespace-nowrap cursor-pointer ${
+                activeScreen === 'liedetector' ? 'font-bold text-pink-950 underline decoration-pink-400 decoration-2 underline-offset-4' : ''
+              }`}
+            >
+              Lie Detector 🚨
             </button>
             <button
               onClick={() => setActiveScreen('court')}

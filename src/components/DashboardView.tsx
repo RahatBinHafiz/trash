@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Gift, Scale, Terminal, Flame, Eye, Mail, Sparkles, ArrowRight, Heart, Zap } from 'lucide-react';
+import { Gift, Scale, Terminal, Flame, Eye, Mail, Sparkles, ArrowRight, Heart, Zap, Fingerprint, ShoppingBag } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { sound } from '../utils/soundEffects';
 
@@ -25,6 +25,19 @@ export const DashboardView: React.FC = () => {
       featured: true,
     },
     {
+      id: 'snackcatcher',
+      title: 'Snack & Love Catcher',
+      emoji: '🧋',
+      tagline: 'Playable arcade! Catch falling boba, pizza & golden kisses from Salak',
+      badge: 'Playable Mini-Game 🎮',
+      badgeColor: 'bg-emerald-100 text-emerald-800',
+      gradient: 'from-emerald-500/10 via-teal-500/10 to-pink-500/10',
+      borderHover: 'hover:border-emerald-400',
+      icon: ShoppingBag,
+      accent: 'text-emerald-600',
+      featured: true,
+    },
+    {
       id: 'punch',
       title: `Punch ${config.boyfriendNickname}!`,
       emoji: '🥊',
@@ -35,6 +48,32 @@ export const DashboardView: React.FC = () => {
       borderHover: 'hover:border-red-400',
       icon: Zap,
       accent: 'text-red-600',
+      featured: true,
+    },
+    {
+      id: 'wheel',
+      title: 'Boyfriend Punishment Wheel',
+      emoji: '🎡',
+      tagline: 'Spin the wheel! Squats, Bollywood dance & audio tasks. Max 3 spins a day with ticket code',
+      badge: 'Notice: Max 3 Spins/Day ⏳',
+      badgeColor: 'bg-rose-100 text-rose-800 font-bold',
+      gradient: 'from-rose-500/15 via-pink-500/15 to-purple-500/15',
+      borderHover: 'hover:border-rose-400',
+      icon: Flame,
+      accent: 'text-rose-600',
+      featured: true,
+    },
+    {
+      id: 'liedetector',
+      title: 'Boyfriend Lie Detector',
+      emoji: '🚨',
+      tagline: 'Biometric fingerprint scan! Test Salak’s honesty or see him sweat',
+      badge: 'Polygraph 3000 🤥',
+      badgeColor: 'bg-purple-100 text-purple-800',
+      gradient: 'from-purple-500/10 via-indigo-500/10 to-pink-500/10',
+      borderHover: 'hover:border-purple-400',
+      icon: Fingerprint,
+      accent: 'text-purple-600',
       featured: true,
     },
     {
@@ -157,7 +196,7 @@ export const DashboardView: React.FC = () => {
             <span>✨</span>
             <span>Choose Your Entertainment</span>
           </h3>
-          <span className="text-xs text-pink-600 font-medium">7 Interactive Rooms</span>
+          <span className="text-xs text-pink-600 font-medium">10 Interactive Rooms</span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

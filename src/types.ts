@@ -57,5 +57,8 @@ export type ActiveScreen =
   | 'diagnostic' 
   | 'suffer' 
   | 'punch'
+  | 'wheel'
+  | 'snackcatcher'
+  | 'liedetector'
   | 'fortune' 
   | 'letter';

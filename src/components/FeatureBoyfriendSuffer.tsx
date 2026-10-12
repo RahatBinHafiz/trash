@@ -133,9 +133,13 @@ export const FeatureBoyfriendSuffer: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* Cartoon Character Centerpiece */}
+        {/* Cartoon Character Centerpiece (Click to throw pillow) */}
         <div className="py-2">
-          <BoyfriendCharacter action={currentAction} girlfriendName={config.girlfriendName} />
+          <BoyfriendCharacter
+            action={currentAction}
+            girlfriendName={config.girlfriendName}
+            onCharacterClick={() => handleAction('pillow')}
+          />
         </div>
 
         {/* 6 Action Buttons */}
